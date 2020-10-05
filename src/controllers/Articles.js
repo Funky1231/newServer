@@ -4,12 +4,12 @@ class ArticleController {
   async create(req, res) {
     const { productId, articleName, description, content } = req.body;
     const articletService = new ArticleService();
-    const newArticle = await articletService.saveArticle(
-      productId,
-      articleName,
+    const newArticle = await articletService.saveArticle({
+      product_id: productId,
+      article_name: articleName,
       description,
-      content
-    );
+      content,
+    });
 
     if (newArticle.data === null) {
       return res.status(400).json("Bad request");
@@ -52,12 +52,11 @@ class ArticleController {
     const { id } = req.params;
     const { articleName, description, content } = req.body;
     const articletService = new ArticleService();
-    const updateArticle = await articletService.updateArticle(
-      id,
-      articleName,
+    const updateArticle = await articletService.updateArticle(id, {
+      article_name: articleName,
       description,
-      content
-    );
+      content,
+    });
     if (updateArticle.data === null) {
       return res.status(400).json("Bad request");
     }

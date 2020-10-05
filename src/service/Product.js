@@ -1,13 +1,9 @@
 const { ProductsModel, ArticlesModels } = require("../models/AllModels");
 
 class ProductService {
-  async saveProduct(productName, description, implementationCost) {
+  async saveProduct(body) {
     try {
-      const newProduct = await ProductsModel.create({
-        product_name: productName,
-        description,
-        implementation_cost: implementationCost,
-      });
+      const newProduct = await ProductsModel.create(body);
       return {
         data: newProduct,
         err: null,
@@ -79,16 +75,9 @@ class ProductService {
       };
     }
   }
-  async updateProduct(id, productName, description, implementationCost) {
+  async updateProduct(id, body) {
     try {
-      const updateProduct = await ProductsModel.update(
-        {
-          product_name: productName,
-          description: description,
-          implementation_cost: implementationCost,
-        },
-        { where: { id: id } }
-      );
+      const updateProduct = await ProductsModel.update(body, { where: { id: id } });
       return {
         data: updateProduct,
         err: null,

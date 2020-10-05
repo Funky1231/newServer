@@ -4,11 +4,11 @@ class ProductController {
   async create(req, res) {
     const { productName, description, implementationCost } = req.body;
     const productService = new ProductService();
-    const newProduct = await productService.saveProduct(
-      productName,
+    const newProduct = await productService.saveProduct({
+      product_name: productName,
       description,
-      implementationCost
-    );
+      implementation_cost: implementationCost,
+    });
 
     if (newProduct.data === null) {
       return res.status(400).json("Bad request");
@@ -53,12 +53,11 @@ class ProductController {
     const { id } = req.params;
     const { productName, description, implementationCost } = req.body;
     const productService = new ProductService();
-    const updateProduct = await productService.updateProduct(
-      id,
-      productName,
-      description,
-      implementationCost
-    );
+    const updateProduct = await productService.updateProduct(id, {
+      product_name: productName,
+      description: description,
+      implementation_cost: implementationCost,
+    });
 
     if (updateProduct.data === null) {
       return res.status(400).json("Bad request");
