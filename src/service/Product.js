@@ -52,6 +52,12 @@ class ProductService {
   }
   async findAllProduct(filter) {
     try {
+      if (filter == "min") {
+        filter = "ASC";
+      }
+      if (filter == "max") {
+        filter = "DESC";
+      }
       const findAll = await ProductsModel.findAll({
         order: [["implementation_cost", `${filter}`]],
         include: [

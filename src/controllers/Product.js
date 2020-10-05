@@ -73,13 +73,6 @@ class ProductController {
   async findAll(req, res) {
     let filter = req.params.filter;
 
-    if (filter == "min") {
-      filter = "ASC";
-    }
-    if (filter == "max") {
-      filter = "DESC";
-    }
-
     const productService = new ProductService();
     const find = await productService.findAllProduct(filter);
 

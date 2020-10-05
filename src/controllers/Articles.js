@@ -70,12 +70,6 @@ class ArticleController {
   async findAll(req, res) {
     let filter = req.params.filter;
 
-    if (filter == "min") {
-      filter = "ASC";
-    }
-    if (filter == "max") {
-      filter = "DESC";
-    }
     const articletService = new ArticleService();
     const find = await articletService.findAllArticle(filter);
     if (find.data === null) {
