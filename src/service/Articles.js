@@ -3,14 +3,12 @@ const { ArticlesModels, ProductsModel } = require("../models/AllModels");
 class ArticleService {
   async saveArticle(productId, articleName, description, content) {
     try {
-      const article = {
+      const newArticle = await ArticlesModels.create({
         product_id: productId,
         article_name: articleName,
         description,
         content,
-      };
-
-      const newArticle = await ArticlesModels.create(article);
+      });
       return {
         data: newArticle,
         err: null,
@@ -52,12 +50,6 @@ class ArticleService {
   }
   async updateArticle(id, articleName, description, content) {
     try {
-      const article = {
-        article_name: articleName,
-        description,
-        content,
-      };
-
       const updateArticle = await ArticlesModels.update(
         { article_name: articleName, description: description, content: content },
         { where: { id: id } }

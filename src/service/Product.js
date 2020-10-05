@@ -3,13 +3,11 @@ const { ProductsModel, ArticlesModels } = require("../models/AllModels");
 class ProductService {
   async saveProduct(productName, description, implementationCost) {
     try {
-      const product = {
+      const newProduct = await ProductsModel.create({
         product_name: productName,
         description,
         implementation_cost: implementationCost,
-      };
-
-      const newProduct = await ProductsModel.create(product);
+      });
       return {
         data: newProduct,
         err: null,
