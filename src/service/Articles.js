@@ -79,14 +79,9 @@ class ArticleService {
   }
   async findAllArticle(filter) {
     try {
-      if (filter == "min") {
-        filter = "ASC";
-      }
-      if (filter == "max") {
-        filter = "DESC";
-      }
+      const orderBy = filter === "min" ? "ASC" : "DESC";
       const getOneArticle = await ArticlesModels.findAll({
-        order: [["created_at", `${filter}`]],
+        order: [["created_at", orderBy]],
         include: [
           {
             model: ProductsModel,
