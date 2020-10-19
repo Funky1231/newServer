@@ -1,10 +1,13 @@
 const { ArticleService } = require("../service/Articles");
 
 class ArticleController {
+  constructor() {
+    this.articleService = new ArticleService();
+    console.log(this.articleService);
+  }
   async create(req, res) {
     const { productId, articleName, description, content } = req.body;
-    const articletService = new ArticleService();
-    const newArticle = await articletService.saveArticle({
+    const newArticle = await this.articleService.saveArticle({
       product_id: productId,
       article_name: articleName,
       description,
@@ -22,9 +25,7 @@ class ArticleController {
 
   async deleteOne(req, res) {
     const id = req.params.id;
-    const articletService = new ArticleService();
-    const deleteArticle = articletService.deleteArticle(id);
-
+    const deleteArticle = this.articleService.deleteArticle(id);
     if (deleteArticle.data === null) {
       return res.status(404).json({ message: "Not found" });
     }
@@ -37,8 +38,7 @@ class ArticleController {
 
   async findOne(req, res) {
     const { productName } = req.param;
-    const articletService = new ArticleService();
-    const find = await articletService.findArticle(productName);
+    const find = await this.articleService.findArticle(productName);
     if (find.data === null) {
       return res.status(404).json({ message: "Not found" });
     }
@@ -51,8 +51,7 @@ class ArticleController {
   async update(req, res) {
     const { id } = req.params;
     const { articleName, description, content } = req.body;
-    const articletService = new ArticleService();
-    const updateArticle = await articletService.updateArticle(id, {
+    const updateArticle = await this.articleService.updateArticle(id, {
       article_name: articleName,
       description,
       content,
@@ -68,9 +67,7 @@ class ArticleController {
 
   async findAll(req, res) {
     let filter = req.params.filter;
-
-    const articletService = new ArticleService();
-    const find = await articletService.findAllArticle(filter);
+    const find = await this.articleService.findAllArticle(filter);
     if (find.data === null) {
       return res.status(404).json({ message: "Not found" });
     }

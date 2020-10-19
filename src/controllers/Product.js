@@ -1,10 +1,12 @@
 const { ProductService } = require("../service/Product");
 
 class ProductController {
+  constructor() {
+    this.productService = new ProductService();
+  }
   async create(req, res) {
     const { productName, description, implementationCost } = req.body;
-    const productService = new ProductService();
-    const newProduct = await productService.saveProduct({
+    const newProduct = await this.productService.saveProduct({
       product_name: productName,
       description,
       implementation_cost: implementationCost,
@@ -22,8 +24,7 @@ class ProductController {
 
   async deleteOne(req, res) {
     const id = req.params.id;
-    const productService = new ProductService();
-    const deleteOne = await productService.deleteProduct(id);
+    const deleteOne = await this.productService.deleteProduct(id);
 
     if (deleteOne.data === null) {
       return res.status(404).json({ message: "Not found" });
@@ -36,9 +37,7 @@ class ProductController {
 
   async findOne(req, res) {
     const { productName } = req.params;
-
-    const productService = new ProductService();
-    const find = await productService.findProduct(productName);
+    const find = await this.productService.findProduct(productName);
 
     if (find.data === null) {
       return res.status(404).json({ message: "Not found" });
@@ -52,8 +51,7 @@ class ProductController {
   async update(req, res) {
     const { id } = req.params;
     const { productName, description, implementationCost } = req.body;
-    const productService = new ProductService();
-    const updateProduct = await productService.updateProduct(id, {
+    const updateProduct = await this.productService.updateProduct(id, {
       product_name: productName,
       description: description,
       implementation_cost: implementationCost,
@@ -72,8 +70,7 @@ class ProductController {
   async findAll(req, res) {
     let filter = req.params.filter;
 
-    const productService = new ProductService();
-    const find = await productService.findAllProduct(filter);
+    const find = await this.productService.findAllProduct(filter);
 
     if (find.data === null) {
       return res.status(404).json({ message: "Not found" });
